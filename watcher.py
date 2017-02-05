@@ -9,7 +9,7 @@ import subprocess
 class Watcher:
     def __init__(self, cmd=None, verbose=False):
         self.files = []
-        self.cmd = cmd or ["python3", "FrewsburgerPysite.py"]
+        self.cmd = cmd or []
         self.mtimes = {}
         self.verbose = verbose  # todo: set up logging instead?
         self.process = None
@@ -79,6 +79,8 @@ class Watcher:
         return 0
 
     def monitor(self):
+        if not self.cmd:
+            raise ValueError("No server command defined")
         rc = None
 
         # initially Start Server
