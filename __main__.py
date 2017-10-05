@@ -1,26 +1,19 @@
 import sys
 from omgchange.watcher import Watcher
+import argparse
 
-# Todo: update arg options
 # Todo: Make this file work right :D
-verbose = False
 cmd = []
 
-def print_usage():
-    print('Usage: python -m omgchange CMD FILES [options]\n'
-          '\t-v|--verbose\tPrint verbose messages during operation'
-          )
-    exit(1)
+if __name__ == '__main__':
+    # Handle CLI args
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-v', '--verbose', help='Print verbose messages during operation',
+                        action='store_true')
 
-# Handle CLI args
-if len(sys.argv) > 1:
-    if '-v' in sys.argv or '--verbose' in sys.argv:
-        verbose = True
-    else:
-        print_usage()
-else:
-    print_usage()
+    if len(sys.argv) < 1:
+        parser.print_help()
+        exit(1)
 
-
-w = Watcher(cmd, verbose=verbose)
-w.monitor()
+    w = Watcher(cmd, verbose=parser.verbose)
+    w.monitor()
